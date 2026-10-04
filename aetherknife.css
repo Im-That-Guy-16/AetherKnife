@@ -1,0 +1,587 @@
+/*
+  AetherKnife — a modern dark-grey theme with a neon-purple glow for Aither (UNIT3D)
+  Load as "External CSS Stylesheet" under Settings > Style, on top of the
+  "Aither Dark" site theme. Works by overriding the same CSS custom
+  properties the site's own theme packs (galactic.css / _aither-dark.css)
+  define, plus a handful of real-selector tweaks for structure/depth that
+  those theme packs don't expose as variables.
+
+  The accent hue (violet -> deep purple, with a cyan flicker) is lifted
+  straight from Aither's own logo gradient, so it reads as "on brand"
+  rather than a random reskin.
+
+  Repo: https://github.com/Im-That-Guy-16/AetherKnife
+  Live: https://Im-That-Guy-16.github.io/AetherKnife/aetherknife.css
+*/
+
+:root{
+  /* ---- base tokens: tweak these to retune the whole theme ---- */
+  --ak-bg-0:#0e0d14;      /* page background */
+  --ak-bg-1:#15131d;      /* header / top-nav / footer */
+  --ak-bg-2:#1a1824;      /* panels / cards / dialog bodies */
+  --ak-bg-3:#211e2d;      /* panel heads / table heads / dropdown menus */
+  --ak-bg-4:#2a2637;      /* hover surfaces / inputs */
+  --ak-bg-5:#332e42;      /* active / selected surfaces */
+  --ak-bg-6:#3c3650;      /* strong hover / badges */
+
+  --ak-border:#2b2738;
+  --ak-border-strong:#403a54;
+
+  --ak-text:#e9e7f2;
+  --ak-text-dim:#b0acc4;
+  --ak-text-muted:#837e9c;
+  --ak-text-bright:#ffffff;
+
+  /* neon purple accent, lifted from the Aither logo's own gradient */
+  --ak-accent:#a855f7;         /* violet — primary accent / links / buttons */
+  --ak-accent-hover:#c084fc;
+  --ak-accent-strong:#8d00ff;  /* deep neon purple, matches the site logo */
+  --ak-accent-2:#af63e4;       /* mid gradient step, also from the logo */
+  --ak-cyan:#15e1ed;           /* the logo's cyan flicker, used sparingly */
+  --ak-glow:rgba(157,60,255,.55);
+  --ak-glow-soft:rgba(157,60,255,.28);
+
+  --ak-teal:#2dd4bf;
+  --ak-teal-light:#5eead4;
+  --ak-green:#34d399;
+  --ak-green-light:#6ee7b7;
+  --ak-red:#fb7185;
+  --ak-red-strong:#ef4444;
+  --ak-amber:#f0b232;
+  --ak-amber-light:#fcd34d;
+  --ak-purple:#8b5cf6;
+  --ak-purple-light:#c4b5fd;
+  --ak-magenta:#e879f9;
+  --ak-magenta-light:#f0abfc;
+  --ak-orange:#fb923c;
+  --ak-orange-light:#fdba74;
+  --ak-blue:#60a5fa;
+  --ak-blue-light:#93c5fd;
+
+  --ak-shadow-sm:0 1px 2px #0007;
+  --ak-shadow-md:0 2px 10px #0008, 0 1px 2px #0006;
+  --ak-shadow-lg:0 10px 28px #0009, 0 2px 8px #0007;
+  --ak-radius:12px;
+  --ak-radius-sm:7px;
+
+  /* ---- core palette used across galactic.css / aither-dark.css ---- */
+  --text-color:var(--ak-text);
+  --color-dark-magenta:#241c30;
+  --color-dark-green:#1c2622;
+  --color-dark-blue:#1e1a30;
+  --color-dark-red:#2a1f24;
+  --color-red:var(--ak-red-strong);
+  --color-light-red:var(--ak-red);
+  --color-green:var(--ak-green);
+  --color-light-green:var(--ak-green-light);
+  --color-yellow:var(--ak-amber);
+  --color-light-yellow:var(--ak-amber-light);
+  --color-magenta:var(--ak-magenta);
+  --color-light-magenta:var(--ak-magenta-light);
+  --color-dark-purple:#241c33;
+  --color-purple:var(--ak-purple);
+  --color-light-purple:var(--ak-purple-light);
+  --color-blue:var(--ak-accent);
+  --color-light-blue:var(--ak-accent-hover);
+  --color-bright-white:#fff;
+  --color-light-orange:var(--ak-orange-light);
+  --color-orange:var(--ak-orange);
+  --color-brown:#a9773f;
+  --color-400:var(--ak-text-dim);
+  --color-A200:var(--ak-accent);
+  --color-A400:var(--ak-accent-strong);
+  --color-text-info:var(--ak-cyan);
+  --color-alert-info:var(--ak-bg-4);
+  --color-icons:#b3aecb;
+  --color-links:var(--ak-accent);
+  --color-links-colored:var(--ak-accent-hover);
+  --color-links-hover:var(--ak-cyan);
+  --color-navtabs:var(--ak-bg-2);
+  --color-button-primary:var(--ak-accent-strong);
+  --color-background:var(--ak-bg-0);
+
+  --message-bubble-bg:var(--ak-bg-4);
+  --message-bubble-fg:currentColor;
+  --message-bubble-box-shadow:var(--ak-shadow-sm);
+  --message-bubble-border-radius:16px;
+  --message-bubble-border:1px solid var(--ak-border);
+  --message-bubble-avatar-border-radius:50%;
+
+  --button-filled-bg:linear-gradient(135deg, var(--ak-accent-strong), var(--ak-accent-2));
+  --achievement-fg:inherit;
+  --achievement-bg:var(--ak-bg-3);
+  --achievement-box-shadow:var(--ak-shadow-sm);
+  --achievement-progress-bg:var(--ak-accent);
+
+  --alert-bg:var(--ak-bg-3);
+  --alert-fg:var(--ak-text-dim);
+  --alert-gap-color:var(--ak-border);
+  --alert-gap-width:1px;
+
+  --article-card-bg:var(--ak-bg-2);
+  --article-card-fg:var(--ak-text-dim);
+  --article-card-head-fg:var(--ak-text);
+  --article-card-time-fg:var(--ak-text-muted);
+  --article-box-shadow:var(--ak-shadow-md);
+
+  --bbcode-input-header-bg:var(--ak-bg-3);
+  --bbcode-input-body-bg:var(--ak-bg-2);
+  --bbcode-input-border:1px solid var(--ak-border);
+  --bbcode-input-border-radius:var(--ak-radius-sm);
+  --bbcode-rendered-fg-default:var(--ak-text);
+  --bbcode-rendered-fg-muted:var(--ak-text-muted);
+  --bbcode-rendered-fg-subtle:#5b5668;
+  --bbcode-rendered-canvas-default:transparent;
+  --bbcode-rendered-canvas-subtle:var(--ak-bg-3);
+  --bbcode-rendered-border-default:var(--ak-border);
+  --bbcode-rendered-border-muted:var(--ak-border-strong);
+  --bbcode-rendered-neutral-muted:#46404b66;
+  --bbcode-rendered-accent-fg:var(--ak-accent);
+  --bbcode-rendered-accent-emphasis:var(--ak-accent-strong);
+  --bbcode-rendered-attention-subtle:#7289da;
+  --bbcode-rendered-danger-fg:var(--ak-red);
+  --bbcode-rendered-quote-bg:#a855f71a;
+  --bbcode-rendered-quote-border:var(--ak-accent);
+
+  --body-bg:var(--ak-bg-0);
+  --body-fg:var(--ak-text);
+
+  --breadcrumb-fg:var(--ak-text-muted);
+  --breadcrumb-active-fg:var(--ak-text-dim);
+  --breadcrumb-hover-fg:var(--ak-text);
+  --breadcrumb-inactive-text-decoration:none;
+
+  --button-filled-border:none;
+  --button-filled-border-radius:var(--ak-radius-sm);
+  --button-filled-fg:#fff;
+  --button-outlined-bg:inherit;
+  --button-outlined-border:1px solid var(--ak-border-strong);
+  --button-outlined-border-radius:var(--ak-radius-sm);
+  --button-outlined-fg:currentColor;
+  --button-text-bg:inherit;
+  --button-text-border:none;
+  --button-text-border-radius:var(--ak-radius-sm);
+  --button-text-fg:currentColor;
+
+  --chatbox-message-bg:var(--ak-bg-4);
+  --chatbox-button-fg:var(--ak-text-muted);
+  --chatbox-button-hover-fg:var(--ak-text);
+  --chatbox-users-bg:var(--ak-bg-2);
+  --chatbox-tab-delete-fg:var(--ak-red);
+  --chatbox-tab-delete-bg:var(--ak-bg-4);
+
+  --collectible-card-bg:var(--ak-bg-2);
+  --collectible-card-fg:var(--ak-text-dim);
+  --collectible-card-hover-fg:#fff;
+  --collectible-card-border:1px solid var(--ak-border);
+  --collectible-card-border-radius:var(--ak-radius);
+  --collectible-card-box-shadow:var(--ak-shadow-sm);
+  --collectible-card-banner-available:var(--ak-green);
+  --collectible-card-banner-last:var(--ak-amber);
+
+  --compact-search-bg:var(--ak-bg-3);
+  --compact-search-box-shadow:none;
+  --compact-search-border-radius:var(--ak-radius-sm);
+  --compact-search-fg:var(--ak-text);
+  --compact-search-padding:5px;
+
+  --comparison-divider-fg:#fff;
+  --comparison-button-fg:#fff;
+
+  --data-table-border-radius:var(--ak-radius);
+  --data-table-fg:var(--ak-text);
+  --data-table-th-bg:var(--ak-bg-3);
+  --data-table-thead-border:none;
+  --data-table-tr-border:1px solid var(--ak-border);
+  --data-table-tr-even-bg:var(--ak-bg-2);
+  --data-table-tr-hover-bg:var(--ak-bg-4);
+  --data-table-tr-odd-bg:#18151f;
+  --data-table-tfoot-border:none;
+
+  --dialog-bg:var(--ak-bg-2);
+  --dialog-border:1px solid var(--ak-border);
+  --dialog-border-radius:var(--ak-radius);
+  --dialog-box-shadow:var(--ak-shadow-lg), 0 0 40px -12px var(--ak-glow-soft);
+  --dialog-fg:var(--ak-text);
+  --dialog-head-bg:var(--ak-bg-3);
+  --dialog-head-fg:var(--ak-text-bright);
+
+  --donation-border-color:var(--ak-border);
+  --donation-box-shadow-color:#0007;
+  --donation-primary-text-color:var(--ak-text);
+  --donation-secondary-text-color:var(--ak-text-dim);
+  --donation-background-color:var(--ak-bg-2);
+  --donation-price-days-color:var(--ak-amber);
+  --donation-chart-daily-bg:#2dd4bf33;
+  --donation-chart-daily-border:var(--ak-teal);
+  --donation-chart-monthly-bg:#a855f733;
+  --donation-chart-monthly-border:var(--ak-accent);
+
+  --fieldset-bg:inherit;
+  --fieldset-fg:var(--ak-text-dim);
+  --fieldset-border-radius:var(--ak-radius-sm);
+  --fieldset-border:1px solid var(--ak-border);
+
+  --footer-bg:var(--ak-bg-1);
+  --footer-hr-fg:var(--ak-border);
+
+  --icon-button-bg:inherit;
+  --icon-button-border:none;
+  --icon-button-border-radius:9999px;
+  --icon-button-fg:currentColor;
+  --icon-button-filled-bg:var(--ak-accent-strong);
+  --icon-button-filled-fg:#fff;
+  --icon-button-filled-border:none;
+
+  --input-text-border:1px solid var(--ak-border-strong);
+  --input-text-border-active:2px solid var(--ak-accent);
+  --input-text-border-error:1px solid var(--ak-red-strong);
+  --input-text-border-hover:2px solid var(--ak-text-muted);
+  --input-text-border-radius:var(--ak-radius-sm);
+  --input-text-fg:var(--ak-text-dim);
+  --input-text-padding:12px;
+  --input-text-padding-active:11px;
+  --input-text-padding-hover:11px;
+
+  --key-value-border-radius:var(--ak-radius-sm);
+  --key-value-even-bg:var(--ak-bg-2);
+  --key-value-odd-bg:#18151f;
+  --key-value-fg:var(--ak-text);
+  --key-value-padding:10px;
+
+  --label-bg:#e2e2e2;
+  --label-fg:#555;
+  --label-fg-active:var(--ak-accent);
+  --label-fg-error:var(--ak-red-strong);
+  --label-fg-hover:#999;
+
+  --legend-fg:var(--ak-text-dim);
+  --legend-bg:transparent;
+  --legend-border:none;
+  --legend-border-radius:0;
+
+  --mediahub-card-bg:var(--ak-bg-2);
+  --mediahub-card-fg:var(--ak-text-dim);
+  --mediahub-card-hover-fg:#fff;
+  --mediahub-card-border:1px solid var(--ak-border);
+  --mediahub-card-border-radius:var(--ak-radius);
+  --mediahub-card-box-shadow:var(--ak-shadow-sm);
+
+  --meta-backdrop-filter:brightness(45%) blur(60px);
+  --meta-dropdown-backdrop-filter:brightness(2) blur(10px);
+  --meta-dropdown-bg:#211e2dee;
+  --meta-dropdown-backdrop-filter-hover:brightness(2) blur(10px);
+  --meta-dropdown-hover-bg:#ffffff14;
+  --meta-dropdown-fg:var(--ak-text-dim);
+  --meta-dropdown-hover-fg:var(--ak-text);
+  --meta-description-fg:var(--ak-text-dim);
+  --meta-id-tag-fg:var(--ak-text-dim);
+  --meta-id-tag-bg:transparent;
+  --meta-id-tag-hover-fg:#fff;
+  --meta-id-tag-hover-bg:#ffffff14;
+  --meta-chips-heading-fg:var(--ak-text-dim);
+  --meta-chip-icon-fg:#1f1f1f;
+  --meta-chip-icon-hover-bg:var(--ak-text-dim);
+  --meta-chip-icon-bg:#cdcdcd;
+  --meta-chip-name-fg:var(--ak-text);
+  --meta-chip-value-fg:var(--ak-text-muted);
+  --meta-chip-value-hover-fg:var(--ak-text);
+  --meta-chip-backdrop-filter-hover:brightness(2) blur(10px);
+  --meta-chip-hover-bg:#ffffff14;
+  --meta-popup-bg:var(--ak-bg-2);
+  --meta-popup-fg:#a89bd6;
+
+  --meter-fg:var(--ak-accent);
+  --meter-bg:var(--ak-bg-5);
+
+  --notification-read:transparent;
+  --notification-unread:var(--ak-accent-strong);
+
+  --option-bg:var(--ak-bg-3);
+  --option-fg:var(--ak-text-dim);
+
+  --paginate-bg:var(--ak-bg-2);
+  --paginate-bg-hover:var(--ak-bg-4);
+  --paginate-bg-current:var(--ak-accent-strong);
+  --paginate-border-radius:var(--ak-radius);
+  --paginate-fg:var(--ak-text-dim);
+  --paginate-fg-disabled:#555;
+  --paginate-divider:var(--ak-border);
+
+  --panel-action-fg:var(--ak-text-dim);
+  --panel-border:1px solid var(--ak-border);
+  --panel-bg:var(--ak-bg-2);
+  --panel-fg:var(--ak-text);
+  --panel-body-border-radius:0 0 var(--ak-radius) var(--ak-radius);
+  --panel-box-shadow:var(--ak-shadow-md);
+  --panel-border-radius:var(--ak-radius);
+  --panel-head-bg:linear-gradient(120deg, var(--ak-bg-3), #251f38);
+  --panel-head-fg:var(--ak-text-bright);
+  --panel-head-border-radius:var(--ak-radius) var(--ak-radius) 0 0;
+
+  --playlist-card-bg:var(--ak-bg-2);
+  --playlist-card-border:1px solid var(--ak-border);
+  --playlist-card-border-radius:var(--ak-radius);
+  --playlist-card-box-shadow:var(--ak-shadow-md);
+  --playlist-card-fg:var(--ak-text-dim);
+  --playlist-card-missing-image-bg:var(--ak-bg-3);
+  --playlist-card-missing-image-fg:var(--ak-text-muted);
+
+  --prize-bg:var(--ak-bg-2);
+  --prize-border-radius:var(--ak-radius);
+  --prize-border:1px solid var(--ak-border);
+  --prize-box-shadow:var(--ak-shadow-md);
+  --prize-fg:var(--ak-text-dim);
+  --prize-heading-fg:var(--ak-text-dim);
+  --prize-icon-primary-color:var(--ak-accent);
+  --prize-icon-secondary-color:linen;
+
+  --post-bg:var(--ak-bg-2);
+  --post-fg:var(--ak-text-dim);
+  --post-shadow:none;
+  --post-head-fg:var(--ak-text);
+  --post-head-bg:none;
+  --post-toolbar-bg:var(--ak-bg-3);
+  --post-toolbar-fg:var(--ak-text-dim);
+  --post-toolbar-hover-bg:var(--ak-bg-4);
+  --post-toolbar-hover-fg:inherit;
+  --post-like-fg:var(--ak-green);
+  --post-dislike-fg:var(--ak-red);
+  --post-aside-bg:var(--ak-bg-3);
+  --post-aside-fg:var(--ak-text-dim);
+  --post-footer-fg:var(--ak-text-dim);
+
+  --quick-search-bg:var(--ak-bg-4);
+  --quick-search-fg:var(--ak-text-dim);
+  --quick-search-border:1px solid var(--ak-border);
+  --quick-search-border-radius:var(--ak-radius);
+  --quick-search-box-shadow:var(--ak-shadow-md);
+  --quick-search-selector-fg:var(--ak-text-dim);
+  --quick-search-selector-hover-bg:var(--ak-bg-5);
+  --quick-search-selector-hover-fg:var(--ak-text);
+  --quick-search-selector-selected-bg:var(--ak-bg-6);
+  --quick-search-selector-selected-fg:var(--ak-text);
+  --quick-search-result-bg:var(--ak-bg-4);
+  --quick-search-result-fg:var(--ak-text-dim);
+  --quick-search-result-hover-bg:var(--ak-bg-5);
+  --quick-search-result-hover-fg:var(--ak-text);
+  --quick-search-result-image-border-radius:var(--ak-radius-sm);
+  --quick-search-result-year-fg:var(--ak-text-muted);
+  --quick-search-result-border:none;
+
+  --scrollbar-color:#a855f733;
+
+  --secondary-nav-bg:linear-gradient(120deg, var(--ak-bg-1), #1c1728);
+  --secondary-nav-box-shadow:0 1px 0 var(--ak-glow-soft), 0 4px 14px #0006;
+  --secondary-nav-tab-fg:var(--ak-text-dim);
+  --secondary-nav-tab-bg:inherit;
+  --secondary-nav-tab-active-text-decoration:underline var(--ak-accent) 2px;
+  --secondary-nav-tab-hover-fg:var(--ak-text);
+  --secondary-nav-tab-hover-bg:transparent;
+  --secondary-nav-tab-hover-text-decoration:underline var(--ak-accent) 2px;
+  --secondary-nav-tab-menu-bg:var(--ak-bg-3);
+  --secondary-nav-tab-menu-fg:inherit;
+  --secondary-nav-tab-menu-border:1px solid var(--ak-border);
+  --secondary-nav-tab-menu-border-radius:var(--ak-radius-sm);
+  --secondary-nav-tab-menu-box-shadow:var(--ak-shadow-lg);
+
+  --select-border:1px solid var(--ak-border-strong);
+  --select-border-active:2px solid var(--ak-accent);
+  --select-border-error:1px solid var(--ak-red-strong);
+  --select-border-hover:2px solid var(--ak-text-muted);
+  --select-border-radius:var(--ak-radius-sm);
+  --select-fg:var(--ak-text-dim);
+  --select-icon:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path fill='%23b0acc4' d='M6 8l-1 1l5 5l5-5l-1-1l-4 4l-4-4z'/></svg>");
+  --select-padding:11px 23px 11px 11px;
+  --select-padding-active:10px 22px 10px 10px;
+  --select-padding-hover:10px 22px 10px 10px;
+
+  --subforum-listing-odd-bg:var(--ak-bg-2);
+  --subforum-listing-even-bg:transparent;
+  --subforum-listing-border:none;
+
+  --textarea-border:1px solid var(--ak-border-strong);
+  --textarea-border-active:2px solid var(--ak-accent);
+  --textarea-border-error:1px solid var(--ak-red-strong);
+  --textarea-border-hover:2px solid var(--ak-text-muted);
+  --textarea-border-radius:var(--ak-radius-sm);
+  --textarea-fg:var(--ak-text-dim);
+  --textarea-padding:12px;
+  --textarea-padding-active:11px;
+  --textarea-padding-hover:11px;
+
+  --top-nav-bg:linear-gradient(120deg, var(--ak-bg-1) 60%, #1d1830);
+  --top-nav-box-shadow:0 1px 0 var(--ak-glow-soft), 0 4px 20px #0007;
+  --top-nav-dropdown-fg:var(--ak-text-dim);
+  --top-nav-dropdown-hover-fg:var(--ak-text);
+  --top-nav-dropdown-hover-bg:var(--ak-bg-5);
+  --top-nav-dropdown-hover-text-decoration:none;
+  --top-nav-dropdown-menu-bg:var(--ak-bg-3);
+  --top-nav-dropdown-menu-border:1px solid var(--ak-border);
+  --top-nav-dropdown-menu-border-radius:var(--ak-radius-sm);
+  --top-nav-dropdown-menu-box-shadow:var(--ak-shadow-lg);
+  --top-nav-dropdown-menu-item-fg:var(--ak-text-dim);
+  --top-nav-dropdown-menu-item-bg:transparent;
+  --top-nav-dropdown-menu-item-hover-fg:inherit;
+  --top-nav-dropdown-menu-item-hover-bg:var(--ak-bg-5);
+  --top-nav-dropdown-menu-item-hover-text-decoration:none;
+  --top-nav-dropdown-menu-item-icon-fg:var(--ak-text-dim);
+  --top-nav-dropdown-menu-item-icon-bg:var(--ak-bg-5);
+  --top-nav-ratio-bar-fg:var(--ak-text-dim);
+  --top-nav-icon-bar-icon-bg:var(--ak-bg-4);
+  --top-nav-icon-bar-icon-fg:var(--ak-text-dim);
+  --top-nav-icon-bar-icon-border-radius:50%;
+  --top-nav-icon-bar-icon-hover-bg:var(--ak-bg-5);
+  --top-nav-icon-bar-icon-hover-fg:var(--ak-text);
+  --top-nav-stats-fg:var(--ak-text-muted);
+  --top-nav-toggle-fg:var(--ak-text-muted);
+
+  --torrent-card-bg:var(--ak-bg-2);
+  --torrent-card-fg:var(--ak-text-dim);
+  --torrent-card-border:1px solid var(--ak-border);
+  --torrent-card-head-bg:var(--ak-bg-3);
+  --torrent-card-head-fg:var(--ak-text-bright);
+  --torrent-card-link-fg:var(--ak-text-bright);
+  --torrent-card-genre-fg:var(--ak-text-dim);
+
+  --torrent-group-bg:var(--ak-bg-2);
+  --torrent-group-header-bg:var(--ak-bg-3);
+  --torrent-group-text:var(--ak-text-bright);
+  --torrent-group-text-muted:var(--ak-text-muted);
+  --torrent-group-table-stripe-even:#ffffff05;
+  --torrent-group-table-stripe-odd:#a855f70a;
+  --torrent-group-hover-brightness-emphasis:1.15;
+  --torrent-group-chip-border:#a855f71a;
+
+  --torrent-row-fg:var(--ak-text-dim);
+  --torrent-row-visited-fg:var(--ak-purple-light);
+  --torrent-row-sticky-bg:var(--ak-bg-4);
+  --torrent-row-format-fg:var(--ak-text-dim);
+  --torrent-row-format-bg:var(--ak-bg-5);
+  --torrent-row-buttons-fg:currentColor;
+  --torrent-row-seeders-fg:var(--ak-green);
+  --torrent-row-leechers-fg:var(--ak-red);
+  --torrent-row-completed-fg:var(--ak-accent-hover);
+  --torrent-row-comments-fg:var(--ak-cyan);
+  --torrent-row-internal-fg:#c2b183;
+  --torrent-row-personal-fg:var(--ak-purple-light);
+  --torrent-row-featured-fg:var(--ak-purple-light);
+  --torrent-row-freeleech-fg:var(--ak-amber);
+  --torrent-row-double-upload-fg:var(--ak-green);
+  --torrent-row-sticky-fg:var(--ak-text);
+  --torrent-row-highspeed-fg:var(--ak-red);
+  --torrent-row-bumped-fg:var(--ak-orange);
+  --torrent-row-thanks-fg:var(--ak-red);
+  --torrent-row-sd-fg:var(--ak-orange);
+
+  --torrent-tag-fg:var(--ak-text-dim);
+  --torrent-tag-bg:transparent;
+  --torrent-tag-hover-fg:#fff;
+  --torrent-tag-hover-bg:#a855f71a;
+
+  --user-stat-card-bg:var(--ak-bg-2);
+  --user-stat-card-fg:var(--ak-text-dim);
+  --user-stat-card-border:1px solid var(--ak-border);
+  --user-stat-card-border-radius:var(--ak-radius);
+  --user-stat-card-box-shadow:var(--ak-shadow-sm);
+
+  --codeblock-background:#211e2d;
+  --pages-title:var(--ak-text-dim);
+
+  --movie-overlay:radial-gradient(circle at 20% 50%, #000 5.46%, #8d00ff5c);
+  --gradient-background:radial-gradient(at 30% top, #241c33 0%, #0e0d14 70%);
+}
+
+/* ================= structural / depth pass ================= */
+
+/* atmospheric neon glow behind the whole page, instead of flat grey */
+body{
+  background:
+    radial-gradient(circle at 10% -8%, #8d00ff29 0%, transparent 42%),
+    radial-gradient(circle at 90% 8%, #15e1ed14 0%, transparent 38%),
+    radial-gradient(circle at 50% 120%, #a855f71c 0%, transparent 45%),
+    var(--ak-bg-0) !important;
+  background-attachment:fixed;
+  color:var(--ak-text);
+}
+
+/* glassy top nav with a neon hairline instead of a flat bar */
+.top-nav{
+  background:var(--top-nav-bg);
+  backdrop-filter:blur(14px) saturate(1.2);
+  -webkit-backdrop-filter:blur(14px) saturate(1.2);
+  border-bottom:1px solid var(--ak-glow-soft);
+}
+.top-nav__site-logo{filter:drop-shadow(0 0 10px var(--ak-glow))}
+.top-nav__icon-bar-icon,.top-nav__profile-image{transition:box-shadow .2s,transform .2s}
+.top-nav__icon-bar li:hover .top-nav__icon-bar-icon,.top-nav__profile-image:hover{
+  box-shadow:0 0 0 2px var(--ak-glow-soft), 0 0 16px var(--ak-glow-soft);
+  transform:translateY(-1px);
+}
+
+.secondary-nav{border-bottom:1px solid var(--ak-glow-soft)}
+
+/* panel headers get a subtle gradient + neon underline instead of flat fill */
+.panel__header,.panel__heading,.panel__sub-heading{
+  border-bottom:2px solid var(--ak-glow-soft);
+}
+
+/* panels & cards: soft lift + purple glow on hover, rounded instead of square */
+.panelV2,.panel,.torrent-card,.mediahub-card,.collectible-card,.user-stat-card,.playlist-card,.prize,.article-card{
+  transition:box-shadow .25s ease,transform .25s ease,border-color .25s ease;
+}
+.panelV2:hover,.torrent-card:hover,.mediahub-card:hover,.collectible-card:hover,.playlist-card:hover{
+  border-color:var(--ak-accent);
+  box-shadow:var(--ak-shadow-lg), 0 0 24px -8px var(--ak-glow);
+  transform:translateY(-2px);
+}
+.torrent-card{border-radius:var(--ak-radius) !important}
+
+/* buttons: neon glow instead of a flat brightness filter on hover */
+.form__button,.btn-primary,.btn-info,.btn-success,.btn-warning,.btn-danger{
+  transition:filter .2s, box-shadow .2s, transform .2s;
+}
+.form__button:hover,.btn-primary:hover{
+  box-shadow:0 0 18px var(--ak-glow);
+  transform:translateY(-1px);
+}
+.form__button:active{transform:translateY(0)}
+
+/* links: faint glow instead of flat color swap */
+a{color:var(--ak-accent);transition:color .15s, text-shadow .15s}
+a:hover{color:var(--ak-cyan) !important;text-shadow:0 0 10px #15e1ed55}
+
+/* current pagination page: neon pill instead of flat square */
+.pagination__current{
+  box-shadow:0 0 16px var(--ak-glow);
+  border-radius:var(--ak-radius-sm);
+}
+.pagination__link:hover{box-shadow:inset 0 0 0 1px var(--ak-accent)}
+
+/* ---- direct overrides for things aither-dark.css hardcodes outside vars ---- */
+.text-bright{color:var(--ak-text-bright)}
+a.text-bright:focus,a.text-bright:hover{color:#fff}
+.text-green{color:var(--ak-green)}
+.text-muted{color:var(--ak-text-muted)}
+.text-info,.footer__icon{color:var(--ak-cyan)}
+.text-purple{color:var(--ak-purple-light)}
+.text-orange{color:var(--ak-orange)}
+.text-success{color:var(--ak-green)}
+.text-pink{color:var(--ak-magenta-light)}
+.text-blue{color:var(--ak-accent)}
+.text-danger{color:var(--ak-red)}
+.text-red{color:var(--ak-red)}
+.text-yellow{color:var(--ak-amber)}
+i.torrent-icon,i.category__icon{color:var(--ak-text-dim)}
+.badge-extra{border:1px solid var(--ak-border);border-radius:var(--ak-radius-sm)}
+.badge-user{border-radius:var(--ak-radius-sm);background-color:var(--ak-bg-5);box-shadow:none;text-shadow:none;border:0}
+.alert-info{background-color:var(--ak-bg-3)!important;color:var(--ak-text-dim)}
+.panel-chat>.panel-body>#frame>.content{background-color:var(--ak-bg-1)}
+#frame{background:var(--ak-bg-1)}
+#frame .content .messages ul li{border-bottom:1px dashed var(--ak-border)}
+#frame .content .message-input .wrap button{background:var(--ak-accent-strong);color:#fff}
+#frame .content .message-input .wrap button:hover{background:var(--ak-accent);box-shadow:0 0 14px var(--ak-glow)}
+
+/* subtle modern polish: purple-tinted scrollbars + glowing focus rings */
+*{scrollbar-color:var(--scrollbar-color) transparent}
+:focus-visible{outline:2px solid var(--ak-accent);outline-offset:1px;box-shadow:0 0 0 4px var(--ak-glow-soft)}
