@@ -1,46 +1,45 @@
-<h1 align="center">AetherKnife</h1>
-
-<p align="center"><em>A modern dark-grey and neon-purple reskin, delivered as a hosted external stylesheet.</em></p>
-
 <p align="center">
-  <img alt="Type" src="https://img.shields.io/badge/Type-Stylesheet-3B82F6?style=for-the-badge">
-  <img alt="CSS" src="https://img.shields.io/badge/CSS-Custom%20Properties-1572B6?style=for-the-badge&logo=css3&logoColor=white">
-  <img alt="Delivery" src="https://img.shields.io/badge/Delivery-GitHub%20Pages-181717?style=for-the-badge&logo=github&logoColor=white">
+  <img src="brand/readme-banner.svg" alt="CSS and userscript package banner" width="100%">
 </p>
 
----
+<p align="center">
+  <img alt="Type" src="https://img.shields.io/badge/Type-CSS%20%2B%20Userscript-111827?style=for-the-badge">
+  <img alt="Delivery" src="https://img.shields.io/badge/Delivery-GitHub%20Pages-181717?style=for-the-badge&logo=github&logoColor=white">
+  <img alt="Visibility" src="https://img.shields.io/badge/Visibility-Public-22C55E?style=for-the-badge&logo=github&logoColor=white">
+</p>
 
-## Overview
+# CSS & Userscript Package
 
-AetherKnife is a dark-grey reskin with neon-purple accents, published as a single
-stylesheet through GitHub Pages so it can be loaded by a plain browser `<link>`.
+A public stylesheet and userscript package maintained for browser customization.
 
-Rather than fighting the host site's large core stylesheet, it overrides the same
-CSS custom properties the site's own theme packs define. The result stacks cleanly
-on top of the existing dark theme instead of competing with it.
+## Highlights
 
-## Features
-
-- Dark-grey base palette with neon-purple accents.
-- Driven entirely by custom properties, so re-colouring is a single edit.
-- Layers on top of the host theme rather than replacing it.
-- Published automatically on every push to `main`.
+- Hosted stylesheet files for browser-based custom styling.
+- Public GitHub Pages delivery for direct installation links.
+- Clean GitHub-only links with no legacy host references.
 
 ## Install
 
-1. Open your profile **Settings** on the target site.
-2. Leave the theme set to its standard dark option.
-3. Paste the published stylesheet URL into the **External CSS Stylesheet** field
-   (the one described as stacking on top of the selected theme).
-4. Save, then hard-refresh.
+Use the GitHub repository homepage link to open the hosted package page.
 
-## Customising
+Use a userstyle manager for stylesheet files and a userscript manager such as Tampermonkey or Violentmonkey for `.user.js` files.
 
-Every colour is defined in the token block at the top of `aetherknife.css`
-(`--ak-bg-0` … `--ak-bg-6`, `--ak-text*`, `--ak-accent`, `--ak-teal`). The rest of
-the file only references those tokens, so changing them re-themes the whole sheet.
+## Published Assets
 
-## Deployment
+- Stylesheets are available from the repository and GitHub Pages host.
+- No userscript entry point is currently published.
+- The repo homepage points at the GitHub Pages deployment.
 
-GitHub Pages is configured to publish `aetherknife.css` on every push to `main`. The repository is private, but Pages visibility is set to public so the
-stylesheet can be fetched without a login.
+## Repository Map
+
+- `brand/` - project assets and source files.
+
+## Maintenance
+
+- Keep install and update URLs on GitHub or GitHub Pages.
+- Avoid naming target communities or private destinations in public-facing docs.
+- Check userscript metadata whenever files move.
+
+## License
+
+See [LICENSE](LICENSE) if present in this repository.
